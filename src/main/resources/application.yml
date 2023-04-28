@@ -1,0 +1,13 @@
+server:
+  port: 9000
+# datasource
+spring:
+  application:
+    name: yago-file-upload
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/uploadfile?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: yougen!1122
+mybatis:
+  mapper-locations: classpath:/mapper/*.xml
