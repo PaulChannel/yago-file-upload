@@ -4,7 +4,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.yago.upload.dao.UploadDao">
 
-  <select id="mybatisTest" resultType="object">
+  <select id="queryAll" resultType="object">
     select *
     from file_chunk;
   </select>

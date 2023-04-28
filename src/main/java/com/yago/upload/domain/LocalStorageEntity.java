@@ -7,6 +7,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * Created by tao.
@@ -14,6 +15,7 @@ import lombok.Data;
  * 描述:
  */
 @Data
+@Accessors(chain = true)
 public class LocalStorageEntity implements Serializable {
 
   private Long id;
@@ -49,6 +51,15 @@ public class LocalStorageEntity implements Serializable {
    * 文件标识，md5校验码
    */
   private String identifier;
+
+  /**
+   * 创建人
+   */
+  private String createBy;
+  /**
+   * 更新人
+   */
+  private String updateBy;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date createTime;

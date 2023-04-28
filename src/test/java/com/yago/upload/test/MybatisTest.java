@@ -31,7 +31,7 @@ public class MybatisTest extends BaseTest {
 
   @Test
   public void testMybatis() {
-    Object o = uploadDao.mybatisTest();
+    Object o = uploadDao.queryAll();
     log.info("res==={}", o);
   }
 }
