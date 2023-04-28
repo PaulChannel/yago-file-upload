@@ -1,4 +1,4 @@
-package com.yago.upload.test.dao;
+package com.yago.upload.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

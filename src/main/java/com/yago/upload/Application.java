@@ -1,4 +1,4 @@
-package com.yago.upload.test;
+package com.yago.upload;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

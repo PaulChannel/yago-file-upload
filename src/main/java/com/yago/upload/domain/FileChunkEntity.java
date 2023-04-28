@@ -1,41 +1,55 @@
-package com.yago.upload.domain.dto;
+package com.yago.upload.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
- * @author: yougen.hu
- * @time: 2023/4/28 13:05
+ * Created by tao.
+ * Date: 2022/6/29 9:53
+ * 描述:
  */
-
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@ToString
-public class FileChunkDto {
+public class FileChunkEntity implements Serializable {
 
   private Long id;
 
+  /**
+   * 当前分片编号，从1开始
+   */
   private Integer chunkNumber;
-
+  /**
+   * 分片大小
+   */
   private Float chunkSize;
-
+  /**
+   * 当前分片大小
+   */
   private Float currentChunkSize;
-
+  /**
+   * 分片总量
+   */
   private Integer totalChunks;
 
+  /**
+   * 文件总大小
+   */
   private Double totalSize;
 
+  /**
+   * 文件标识,md5校验码
+   */
   private String identifier;
 
+  /**
+   * 文件名称
+   */
   private String filename;
-
+  /**
+   * 文件真实路径
+   */
   private String relativePath;
 
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -44,5 +58,5 @@ public class FileChunkDto {
   @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
   private Date updateTime;
 
-  private MultipartFile multipartFile;
+
 }

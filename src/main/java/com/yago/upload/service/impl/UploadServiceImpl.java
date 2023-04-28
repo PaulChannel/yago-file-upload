@@ -1,7 +1,7 @@
 package com.yago.upload.service.impl;
 
+import com.yago.upload.dao.UploadDao;
 import com.yago.upload.service.UploadService;
-import com.yago.upload.test.dao.UploadDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
