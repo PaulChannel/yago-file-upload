@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.yago.upload.dao.FileChunkDao;
 import com.yago.upload.domain.FileChunkEntity;
+import com.yago.upload.service.FileChunkService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,11 @@ public class FileChunkServiceImpl implements FileChunkService {
 
   @Autowired
   FileChunkDao fileChunkDao;
+
+  @Override
+  public void saveFileChunk(FileChunkEntity fileChunkEntity) {
+    fileChunkDao.saveFileChunk(fileChunkEntity);
+  }
 
   @Override
   public List<FileChunkEntity> findByMd5(String md5) {

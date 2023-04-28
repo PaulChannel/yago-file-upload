@@ -18,4 +18,9 @@
     from file_chunk
     where identifier = #{md5};
   </select>
+  <insert id="saveFileChunk" parameterType="com.yago.upload.domain.FileChunkEntity">
+    insert into file_chunk
+    values (#{id}, #{filename}, #{chunkNumber}, #{chunkSize}, #{currentChunkSize}, #{totalSize}, #{totalChunk}, #{identifier}, #{relativePath},
+            #{createTime}, #{updateTime});
+  </insert>
 </mapper>

@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import lombok.experimental.Accessors;
 
 /**
  * Created by tao.
@@ -12,6 +13,7 @@ import lombok.Data;
  * 描述:
  */
 @Data
+@Accessors(chain = true)
 public class FileChunkEntity implements Serializable {
 
   private Long id;
@@ -31,7 +33,7 @@ public class FileChunkEntity implements Serializable {
   /**
    * 分片总量
    */
-  private Integer totalChunks;
+  private Integer totalChunk;
 
   /**
    * 文件总大小

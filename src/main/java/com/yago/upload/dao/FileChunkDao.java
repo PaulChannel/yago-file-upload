@@ -15,4 +15,6 @@ import org.apache.ibatis.annotations.Param;
 public interface FileChunkDao {
 
   List<FileChunkEntity> findByMd5(@Param("md5") String md5);
+
+  void saveFileChunk(FileChunkEntity fileChunkEntity);
 }

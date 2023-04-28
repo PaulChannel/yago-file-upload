@@ -1,10 +1,12 @@
-package com.yago.upload.test;
+package com.yago.upload.test.service;
 
+import java.util.Date;
 import java.util.List;
 
 import cn.hutool.json.JSONUtil;
 import com.yago.upload.domain.FileChunkEntity;
-import com.yago.upload.service.impl.FileChunkService;
+import com.yago.upload.service.FileChunkService;
+import com.yago.upload.test.BaseTest;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +26,13 @@ public class FileChunkServiceTest extends BaseTest {
   public void testFindByMd5() {
     List<FileChunkEntity> listFileChunk = fileChunkService.findByMd5("1");
     log.info(JSONUtil.toJsonStr(listFileChunk));
+  }
+
+  @Test
+  public void testSaveFileChunk() {
+    FileChunkEntity fileChunkEntity = new FileChunkEntity();
+    fileChunkEntity.setId(2L).setChunkSize(1F).setChunkNumber(1).setCurrentChunkSize(1F).setTotalChunk(1).setFilename("test")
+        .setCreateTime(new Date()).setUpdateTime(new Date());
+    fileChunkService.saveFileChunk(fileChunkEntity);
   }
 }
