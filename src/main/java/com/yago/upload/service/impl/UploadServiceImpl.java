@@ -1,6 +1,6 @@
-package com.yago.upload.test.configuration.service.impl;
+package com.yago.upload.service.impl;
 
-import com.yago.upload.test.configuration.service.UploadService;
+import com.yago.upload.service.UploadService;
 import com.yago.upload.test.dao.UploadDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ public class UploadServiceImpl implements UploadService {
 
   @Autowired
   private UploadDao uploadDao;
+
 
   @Override
   public Object queryAll() {

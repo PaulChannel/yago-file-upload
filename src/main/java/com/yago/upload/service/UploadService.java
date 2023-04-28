@@ -1,4 +1,4 @@
-package com.yago.upload.test.configuration.service;
+package com.yago.upload.service;
 
 public interface UploadService {
 
