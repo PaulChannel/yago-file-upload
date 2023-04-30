@@ -37,7 +37,6 @@ public class LocalStorageServiceImpl implements LocalStorageService {
       localStorageEntity.setSuffix(fileName.substring(idx));
       localStorageEntity.setType(fileName.substring(idx + 1));
     }
-    // todo: 完善文件信息
     localStorageEntity.setRealName(fileName).setName(fileName).setUpdateTime(fileChunkEntity.getCreateTime())
         .setCreateTime(fileChunkEntity.getUpdateTime()).setPath(fileChunkEntity.getRelativePath()).setIdentifier(fileChunkEntity.getIdentifier())
         .setSize(fileChunkEntity.getTotalSize()).setUpdateTime(new Date()).setIdentifier(fileChunkEntity.getIdentifier());

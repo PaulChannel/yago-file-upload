@@ -38,10 +38,10 @@ public class UploadFileServiceTest extends BaseTest {
   public void testChunkFileUpload() {
     FileChunkVo fileChunkVo1 = new FileChunkVo();
     FileChunkVo fileChunkVo2 = new FileChunkVo();
-    fileChunkVo2.setFileName("chunkName1.txt");
-    fileChunkVo1.setFileName("chunkName1.txt");
-    fileChunkVo1.setRelativePath("chunk/chunkName1.txt");
-    fileChunkVo2.setRelativePath("chunk/chunkName1.txt");
+    fileChunkVo2.setFileName("chunkName2.txt");
+    fileChunkVo1.setFileName("chunkName2.txt");
+    fileChunkVo1.setRelativePath("chunk/chunkName2.txt");
+    fileChunkVo2.setRelativePath("chunk/chunkName2.txt");
     fileChunkVo1.setTotalSize(10.0);
     fileChunkVo2.setTotalSize(10.0);
     fileChunkVo1.setChunkNumber(1);
@@ -50,9 +50,9 @@ public class UploadFileServiceTest extends BaseTest {
     fileChunkVo2.setChunkSize(5F);
     fileChunkVo2.setTotalChunk(2);
     fileChunkVo1.setTotalChunk(2);
-    MultipartFile multipartFile1 = new MockMultipartFile("chuntest", "aaaaa".getBytes());
+    MultipartFile multipartFile1 = new MockMultipartFile("chuntest", "bbbbb".getBytes());
     fileChunkVo1.setMultipartFile(multipartFile1);
-    MultipartFile multipartFile2 = new MockMultipartFile("chuntest", "aaaaa".getBytes());
+    MultipartFile multipartFile2 = new MockMultipartFile("chuntest", "bbbbb".getBytes());
     fileChunkVo2.setMultipartFile(multipartFile2);
     uploadService.uploadFile(fileChunkVo1);
     uploadService.uploadFile(fileChunkVo2);

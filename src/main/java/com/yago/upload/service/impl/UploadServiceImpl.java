@@ -4,6 +4,12 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.lang.reflect.Method;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+import java.nio.channels.FileChannel.MapMode;
+import java.security.AccessController;
+import java.security.PrivilegedAction;
 import java.util.Objects;
 
 import com.yago.upload.dao.UploadDao;
@@ -17,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import sun.misc.Cleaner;
 
 /**
  * @author: yougen.hu
@@ -65,7 +72,7 @@ public class UploadServiceImpl implements UploadService {
     String div = "/";
     // 如果上传的的文件包含子目录
     if (relativePath.contains("/") || relativePath.contains(File.separator)) {
-      log.debug("上传需要建立新文件夹{}", relativePath);
+      log.debug("上传解析文件夹====>{}", relativePath);
       div = relativePath.contains(File.separator) ? File.separator : "/";
       String tempPath = relativePath.substring(0, relativePath.lastIndexOf(div));
       File realDir = new File(BASE_FILE_SAVE_PATH + div + tempPath);
@@ -92,8 +99,8 @@ public class UploadServiceImpl implements UploadService {
       return true;
     }
     // 如果是多片文件上传
-    uploadByRandomAccessFile(realFile, fileChunkVo);
-
+    // uploadByRandomAccessFile(realFile, fileChunkVo);
+    uploadByByteBuffer(realFile, fileChunkVo);
     return true;
   }
 
@@ -117,7 +124,7 @@ public class UploadServiceImpl implements UploadService {
       log.info("filePointer===>{}", filePointer);
       randomAccessFile.write(fileChunkVo.getMultipartFile().getBytes());
       fileCHunkService.saveFileChunk(fileChunkVo);
-      if (fileChunkVo.getChunkNumber() == fileChunkVo.getTotalChunk()) {
+      if (Objects.equals(fileChunkVo.getChunkNumber(), fileChunkVo.getTotalChunk())) {
         localStorageService.saveLocalStorage(fileChunkVo);
       }
     } catch (FileNotFoundException e) {
@@ -129,4 +136,46 @@ public class UploadServiceImpl implements UploadService {
     }
     return true;
   }
+
+  public boolean uploadByByteBuffer(File realName, FileChunkVo fileChunkVo) {
+    MappedByteBuffer mappedByteBuffer = null;
+    try (RandomAccessFile randomAccessFile = new RandomAccessFile(realName, "rw"); FileChannel channel = randomAccessFile.getChannel();) {
+      long offset = fileChunkVo.getChunkSize().longValue() * (fileChunkVo.getChunkNumber() - 1);
+
+      mappedByteBuffer = channel.map(MapMode.READ_WRITE, offset, fileChunkVo.getChunkSize().longValue());
+      mappedByteBuffer.put(fileChunkVo.getMultipartFile().getBytes());
+      if (fileChunkVo.getChunkNumber().equals(fileChunkVo.getTotalChunk())) {
+        localStorageService.saveLocalStorage(fileChunkVo);
+      }
+
+    } catch (IOException e) {
+      log.error("uploadByByteBuffer fial", e);
+      throw new BizException("uploadByByteBuffer fial");
+
+    } finally {
+      umap(mappedByteBuffer);
+    }
+    return true;
+  }
+
+  public void umap(MappedByteBuffer mappedByteBuffer) {
+    if (mappedByteBuffer == null) {
+      return;
+    }
+    // 将缓冲区中的内容强行写入文件中
+    mappedByteBuffer.force();
+    AccessController.doPrivileged((PrivilegedAction<Object>) () -> {
+      try {
+        Method method = mappedByteBuffer.getClass().getMethod("cleaner");
+        method.setAccessible(true);
+        Cleaner cleaner = (Cleaner) method.invoke(mappedByteBuffer, new Object[0]);
+        cleaner.clean();
+      } catch (Exception e) {
+        log.error("释放mappedByteBuffer失败", e);
+        throw new RuntimeException(e);
+      }
+      return null;
+    });
+  }
+
 }
