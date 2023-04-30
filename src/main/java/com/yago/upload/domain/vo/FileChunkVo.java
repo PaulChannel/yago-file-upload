@@ -21,4 +21,5 @@ import org.springframework.web.multipart.MultipartFile;
 public class FileChunkVo extends FileChunkEntity {
 
   private MultipartFile multipartFile;
+
 }

@@ -45,7 +45,7 @@ public class LocalStorageEntity implements Serializable {
   /**
    * 大小
    */
-  private String size;
+  private Double size;
 
   /**
    * 文件标识，md5校验码
@@ -70,7 +70,7 @@ public class LocalStorageEntity implements Serializable {
   public LocalStorageEntity() {
   }
 
-  public LocalStorageEntity(String realName, String name, String suffix, String path, String type, String size, String identifier) {
+  public LocalStorageEntity(String realName, String name, String suffix, String path, String type, Double size, String identifier) {
     this.realName = realName;
     this.name = name;
     this.suffix = suffix;
@@ -80,7 +80,7 @@ public class LocalStorageEntity implements Serializable {
     this.identifier = identifier;
   }
 
-  public LocalStorageEntity(Long id, String realName, String name, String suffix, String path, String type, String size, String identifier) {
+  public LocalStorageEntity(Long id, String realName, String name, String suffix, String path, String type, Double size, String identifier) {
     this.id = id;
     this.realName = realName;
     this.name = name;

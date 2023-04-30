@@ -48,7 +48,7 @@ public class FileChunkEntity implements Serializable {
   /**
    * 文件名称
    */
-  private String filename;
+  private String fileName;
   /**
    * 文件真实路径
    */

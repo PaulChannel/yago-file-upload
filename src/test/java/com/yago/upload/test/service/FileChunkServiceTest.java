@@ -31,7 +31,7 @@ public class FileChunkServiceTest extends BaseTest {
   @Test
   public void testSaveFileChunk() {
     FileChunkEntity fileChunkEntity = new FileChunkEntity();
-    fileChunkEntity.setId(2L).setChunkSize(1F).setChunkNumber(1).setCurrentChunkSize(1F).setTotalChunk(1).setFilename("test")
+    fileChunkEntity.setId(2L).setChunkSize(1F).setChunkNumber(1).setCurrentChunkSize(1F).setTotalChunk(1).setFileName("test")
         .setCreateTime(new Date()).setUpdateTime(new Date());
     fileChunkService.saveFileChunk(fileChunkEntity);
   }

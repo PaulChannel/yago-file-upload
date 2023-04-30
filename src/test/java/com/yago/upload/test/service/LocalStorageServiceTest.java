@@ -21,7 +21,7 @@ public class LocalStorageServiceTest extends BaseTest {
   @Test
   public void testSaveLocalStorage() {
     FileChunkEntity fileChunkEntity = new FileChunkEntity();
-    fileChunkEntity.setId(2L).setChunkSize(1F).setChunkNumber(1).setCurrentChunkSize(1F).setTotalChunk(1).setFilename("test")
+    fileChunkEntity.setId(2L).setChunkSize(1F).setChunkNumber(1).setCurrentChunkSize(1F).setTotalChunk(1).setFileName("test")
         .setCreateTime(new Date()).setUpdateTime(new Date());
     localStorageService.saveLocalStorage(fileChunkEntity);
   }

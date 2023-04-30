@@ -55,14 +55,15 @@ public class UploadServiceImpl implements UploadService {
       }
     }
     String relativePath = fileChunkVo.getRelativePath();
-    File realPath;
+    File realFullPath;
+    String div = "/";
     // 如果上传的文件夹
     if (relativePath.contains("/") || relativePath.contains(File.separator)) {
-      String div = relativePath.contains(File.separator) ? File.separator : "/";
+      div = relativePath.contains(File.separator) ? File.separator : "/";
       String tempPath = relativePath.substring(0, relativePath.indexOf(div));
-      realPath = new File(BASE_FILE_SAVE_PATH + div + tempPath);
-      if (!realPath.exists()) {
-        boolean mkdir = realPath.mkdir();
+      realFullPath = new File(BASE_FILE_SAVE_PATH + div + tempPath);
+      if (!realFullPath.exists()) {
+        boolean mkdir = realFullPath.mkdir();
         if (mkdir) {
           log.info("创建上传文件夹成功");
         } else {
@@ -71,12 +72,16 @@ public class UploadServiceImpl implements UploadService {
       }
       // 如果上传的是基于基础路径的文件
     } else {
-      realPath = baseFile;
+      realFullPath = new File(BASE_FILE_SAVE_PATH + div + fileChunkVo.getFileName());
     }
+    // 将真实路径进行重制方便存入数据库。
+    log.debug("relativePath====>{}", relativePath);
+    String path = realFullPath.toURI().getPath();
+    fileChunkVo.setRelativePath(path);
 
     // 如果是单片文件上传
     if (fileChunkVo.getTotalChunk() == 1) {
-      uploadSingleFile(multipartFile, realPath);
+      uploadSingleFile(multipartFile, realFullPath);
       localStorageService.saveLocalStorage(fileChunkVo);
     }
     return false;
@@ -84,14 +89,12 @@ public class UploadServiceImpl implements UploadService {
 
 
   public boolean uploadSingleFile(MultipartFile multipartFile, File dest) {
-
     try {
+      log.debug("file ==>{}", dest);
+      log.debug("file ==>{}", multipartFile);
       multipartFile.transferTo(dest);
-
-
     } catch (IOException e) {
       throw new BizException("单片文件上传io异常", e);
-
     }
     return true;
   }
