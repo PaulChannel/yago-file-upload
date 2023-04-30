@@ -22,4 +22,5 @@ public class FileChunkVo extends FileChunkEntity {
 
   private MultipartFile multipartFile;
 
+
 }

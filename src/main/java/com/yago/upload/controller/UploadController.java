@@ -1,5 +1,7 @@
 package com.yago.upload.controller;
 
+import java.util.UUID;
+
 import com.yago.upload.domain.vo.FileChunkVo;
 import com.yago.upload.domain.vo.ResultVo;
 import com.yago.upload.service.UploadService;
@@ -22,9 +24,14 @@ public class UploadController {
 
   @PostMapping("/chunkUpload")
   public ResultVo chunkUpload(FileChunkVo fileChunkVo) {
+    if (fileChunkVo.getIdentifier() == null) {
+
+      String identifier = UUID.randomUUID().toString();
+      fileChunkVo.setIdentifier(identifier);
+    }
     boolean b = uploadService.uploadFile(fileChunkVo);
     if (b) {
-      return new ResultVo(200, "文件上传成功");
+      return new ResultVo<String>(200, "文件上传成功", fileChunkVo.getIdentifier());
     }
     return new ResultVo(500, "文件上传失败");
   }

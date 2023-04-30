@@ -8,6 +8,7 @@ import com.yago.upload.test.BaseTest;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * @author: yougen.hu
@@ -32,5 +33,31 @@ public class UploadFileServiceTest extends BaseTest {
     fileChunkVo.setMultipartFile(mockMultipartFile);
     uploadService.uploadFile(fileChunkVo);
   }
+
+  @Test
+  public void testChunkFileUpload() {
+    FileChunkVo fileChunkVo1 = new FileChunkVo();
+    FileChunkVo fileChunkVo2 = new FileChunkVo();
+    fileChunkVo2.setFileName("chunkName1.txt");
+    fileChunkVo1.setFileName("chunkName1.txt");
+    fileChunkVo1.setRelativePath("chunk/chunkName1.txt");
+    fileChunkVo2.setRelativePath("chunk/chunkName1.txt");
+    fileChunkVo1.setTotalSize(10.0);
+    fileChunkVo2.setTotalSize(10.0);
+    fileChunkVo1.setChunkNumber(1);
+    fileChunkVo2.setChunkNumber(2);
+    fileChunkVo1.setChunkSize(5F);
+    fileChunkVo2.setChunkSize(5F);
+    fileChunkVo2.setTotalChunk(2);
+    fileChunkVo1.setTotalChunk(2);
+    MultipartFile multipartFile1 = new MockMultipartFile("chuntest", "aaaaa".getBytes());
+    fileChunkVo1.setMultipartFile(multipartFile1);
+    MultipartFile multipartFile2 = new MockMultipartFile("chuntest", "aaaaa".getBytes());
+    fileChunkVo2.setMultipartFile(multipartFile2);
+    uploadService.uploadFile(fileChunkVo1);
+    uploadService.uploadFile(fileChunkVo2);
+
+  }
+
 }
 
